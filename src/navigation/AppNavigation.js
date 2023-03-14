@@ -4,7 +4,7 @@ import { PokemonStack } from "./PokemonStack";
 import { FavoritesStack } from "./FavoritesStack";
 import { AccountStack } from "./AccountStack";
 import { SearchScreen } from "../screens/SearchScreen";
-import { screen } from "../../utils";
+import { screen } from "../utils";
 const Tab = createBottomTabNavigator();
 
 export function AppNavigation() {
