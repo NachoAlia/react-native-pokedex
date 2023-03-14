@@ -1,9 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
-import { PokemonsScreen } from "../screens/PokemonsScreen";
-import { FavoritesScreen } from "../screens/FavoritesScreen";
-import { AccountScreen } from "../screens/AccountScreen";
+import { PokemonStack } from "./PokemonStack";
+import { FavoritesStack } from "./FavoritesStack";
+import { AccountStack } from "./AccountStack";
 import { SearchScreen } from "../screens/SearchScreen";
+import { screen } from "../../utils";
 const Tab = createBottomTabNavigator();
 
 export function AppNavigation() {
@@ -14,24 +15,46 @@ export function AppNavigation() {
         tabBarInactiveTintColor: "#646464",
         tabBarIcon: ({ color, size }) => screenOptions(route, color, size),
         tabBarLabelPosition: "beside-icon",
+        headerTitleContainerStyle: {
+          alignSelf: "center",
+        },
+        headerShown: false,
       })}
     >
-      <Tab.Screen name="Pokemons" component={PokemonsScreen} />
-      <Tab.Screen name="Favoritos" component={FavoritesScreen} />
-      <Tab.Screen name="Mi cuenta" component={AccountScreen} />
+      <Tab.Screen
+        name={screen.pokemons.tab}
+        component={PokemonStack}
+        options={{
+          title: "Pokemons",
+        }}
+      />
+      <Tab.Screen
+        name={screen.favorites.tab}
+        component={FavoritesStack}
+        options={{
+          title: "Favoritos",
+        }}
+      />
+      <Tab.Screen
+        name={screen.account.tab}
+        component={AccountStack}
+        options={{
+          title: "Mi cuenta",
+        }}
+      />
     </Tab.Navigator>
   );
 }
 
 function screenOptions(route, color, size) {
   let iconName;
-  if (route.name === "Pokemons") {
+  if (route.name === screen.pokemons.tab) {
     iconName = "pokeball";
   }
-  if (route.name === "Favoritos") {
+  if (route.name === screen.favorites.tab) {
     iconName = "heart-outline";
   }
-  if (route.name === "Mi cuenta") {
+  if (route.name === screen.account.tab) {
     iconName = "at";
   }
   return (
