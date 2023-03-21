@@ -7,12 +7,20 @@ const Stack = createNativeStackNavigator();
 
 export function AppStack() {
   return (
-    <Stack.Navigator initialRouteName={screen.account.login}>
+    <Stack.Navigator
+      initialRouteName={screen.account.login}
+      screenOptions={{
+        headerTintColor: "white",
+      }}
+    >
       <Stack.Screen
         name={screen.account.login}
         component={LoginScreen}
         options={{
+          headerTransparent: true,
           title: "Iniciar Sesion",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: "white", marginBottom: 10, fontSize: 20 },
         }}
       />
       <Stack.Screen
@@ -20,6 +28,10 @@ export function AppStack() {
         component={RegisterScreen}
         options={{
           title: "Registrarse",
+          headerTransparent: true,
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: "white", marginBottom: 10, fontSize: 20 },
+          headerBackButtonMenuEnabled: true,
         }}
       />
       <Stack.Screen

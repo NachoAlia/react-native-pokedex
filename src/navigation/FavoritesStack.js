@@ -11,6 +11,7 @@ export function FavoritesStack() {
         component={FavoritesScreen}
         options={{
           title: "Favoritos",
+          headerTitleAlign: "center",
         }}
       />
     </Stack.Navigator>

@@ -11,6 +11,7 @@ export function AccountStack() {
         component={AccountScreen}
         options={{
           title: "Mi cuenta",
+          headerTitleAlign: "center",
         }}
       />
     </Stack.Navigator>
