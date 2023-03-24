@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Button, View } from "react-native";
 import { Icon } from "react-native-elements";
 import { PokemonStack } from "./PokemonStack";
 import { FavoritesStack } from "./FavoritesStack";
@@ -40,6 +41,7 @@ export function AppNavigation() {
         component={AccountStack}
         options={{
           title: "Mi cuenta",
+          tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
         }}
       />
     </Tab.Navigator>

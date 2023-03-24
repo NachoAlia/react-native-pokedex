@@ -1,33 +1,26 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import { View } from "react-native";
 import { Button } from "react-native-elements";
-import { getAuth, signOut } from "firebase/auth";
 
 import { useNavigation } from "@react-navigation/native";
+import { InfoUser, AccountOptions } from "../../../components";
+import { ButtonLogout } from "../../../components";
+import { getAuth, signOut } from "firebase/auth";
 import { screen } from "../../../utils";
+import { styles } from "./AccountScreen.styles";
 import Toast from "react-native-toast-message";
 
 export function AccountScreen() {
-  const navigation = useNavigation();
-
-  const handleSignOut = async () => {
-    const auth = getAuth();
-    await signOut(auth)
-      .then(() => {
-        navigation.navigate(screen.account.login);
-      })
-      .catch((error) => {
-        Toast.show({
-          type: "error",
-          position: "bottom",
-          text1: "Error, no ha podido cerrarse sesion",
-        });
-      });
-  };
+  const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState("");
+  const [_, setReload] = useState(false);
+  const onReload = () => setReload((prevState) => !prevState);
 
   return (
-    <View>
-      <Button title="Cerrar sesion" onPress={handleSignOut} />
+    <View style={styles.content}>
+      <InfoUser />
+      <AccountOptions onReload={onReload} />
+      <ButtonLogout title="Cerrar sesion" containerStyle={{ marginTop: 5 }} />
     </View>
   );
 }

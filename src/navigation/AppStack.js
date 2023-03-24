@@ -20,9 +20,22 @@ export function AppStack() {
           headerTransparent: true,
           title: "Iniciar Sesion",
           headerTitleAlign: "center",
-          headerTitleStyle: { color: "white", marginBottom: 10, fontSize: 20 },
+          headerTitleStyle: {
+            color: "white",
+            marginBottom: 10,
+            fontSize: 20,
+          },
         }}
       />
+
+      <Stack.Screen
+        name={screen.account.index}
+        component={AppNavigation}
+        options={{
+          headerShown: false,
+        }}
+      />
+
       <Stack.Screen
         name={screen.account.register}
         component={RegisterScreen}
@@ -32,13 +45,6 @@ export function AppStack() {
           headerTitleAlign: "center",
           headerTitleStyle: { color: "white", marginBottom: 10, fontSize: 20 },
           headerBackButtonMenuEnabled: true,
-        }}
-      />
-      <Stack.Screen
-        name={screen.account.index}
-        component={AppNavigation}
-        options={{
-          headerShown: false,
         }}
       />
     </Stack.Navigator>

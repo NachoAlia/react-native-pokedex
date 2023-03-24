@@ -12,7 +12,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Toast from "react-native-toast-message";
 
 export function LoginForm() {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState();
 
   const navigation = useNavigation();
 
