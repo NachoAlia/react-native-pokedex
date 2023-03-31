@@ -36,7 +36,7 @@ export function AccountOptions(props) {
   const menuOptions = getMenuOptions(selectedComponent);
 
   return (
-    <View>
+    <View style={{ marginTop: 20 }}>
       {map(menuOptions, (menu, index) => (
         <ListItem key={index} bottomDivider onPress={menu.onPress}>
           <Icon

@@ -1,6 +1,7 @@
 const pokemonsStack = {
   tab: "PokemonsTab",
   pokemons: "Pokemons",
+  pokemon: "Pokemon",
 };
 const favoritesStack = {
   tab: "FavoritesTab",

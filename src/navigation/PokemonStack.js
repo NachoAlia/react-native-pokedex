@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils";
-import { PokemonsScreen } from "../screens/Pokemons/PokemonsScreen";
+import { PokemonsScreen } from "../screens/Pokemons/PokemonsScreen/PokemonsScreen";
+import { PokemonDetailScreen } from "../screens/Pokemons/PokemonDetailScreen";
 import { Button } from "react-native-elements";
 import { MyModal } from "../components";
 
@@ -13,7 +14,16 @@ export function PokemonStack() {
         name={screen.pokemons.pokemons}
         component={PokemonsScreen}
         options={{
-          title: "Pokemons",
+          title: "Pokédex",
+          headerTitleAlign: "center",
+          headerRight: () => <MyModal />,
+        }}
+      />
+      <Stack.Screen
+        name={screen.pokemons.pokemon}
+        component={PokemonDetailScreen}
+        options={{
+          title: "Pokemón",
           headerTitleAlign: "center",
           headerRight: () => <MyModal />,
         }}

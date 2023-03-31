@@ -26,7 +26,7 @@ export function AppNavigation() {
         name={screen.pokemons.tab}
         component={PokemonStack}
         options={{
-          title: "Pokemons",
+          title: "Pokédex",
         }}
       />
       <Tab.Screen
