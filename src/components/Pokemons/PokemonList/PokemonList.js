@@ -18,15 +18,15 @@ export function PokemonList() {
 
   const navigation = useNavigation();
 
-  const goToDetail = (pokemon) => {
-    navigation.navigate(screen.pokemons.pokemon);
+  const goToDetail = (url) => {
+    navigation.navigate(screen.pokemons.pokemon, { pokemon: url });
   };
 
   const numColumns = 3;
 
   useEffect(() => {
     if (!searchTerm && pokemon.length === 0) {
-      fetch("https://pokeapi.co/api/v2/pokemon?limit=30&offset=0")
+      fetch("https://pokeapi.co/api/v2/pokemon?limit=6&offset=0")
         .then((res) => res.json())
         .then((data) => {
           setPokemon(data.results);

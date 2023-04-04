@@ -39,8 +39,8 @@ export const styles = StyleSheet.create({
     opacity: 0.3,
   },
   pokeImage: {
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 100,
     resizeMode: "cover",
     marginTop: 10,
   },
