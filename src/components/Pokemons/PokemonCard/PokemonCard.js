@@ -44,15 +44,17 @@ export function PokemonCard(props) {
       <Text style={styles.pokeOrder}> #{pokemon.order}</Text>
 
       <View style={styles.badgeContainer}>
-        {map(pokemon.types, (type) => (
-          <View style={styles.pokeTypeBadge} key={type.type.name}>
-            <Icon
-              type="material-community"
-              name={getPokeIcon(type.type.name)}
-              color={getPokeColor(type.type.name)}
-            />
-          </View>
-        ))}
+        {map(pokemon.types, (type) => {
+          return (
+            <View style={styles.pokeTypeBadge} key={type.type.name}>
+              <Image
+                source={getPokeIcon(type.type.name)}
+                style={{ width: 25, height: 25, borderRadius: 5 }}
+                resizeMode="cover"
+              />
+            </View>
+          );
+        })}
       </View>
     </View>
   );

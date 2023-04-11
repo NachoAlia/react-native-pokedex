@@ -5,6 +5,7 @@ import { styles } from "./Info.styles";
 import { StatLine } from "../StatLine";
 import { getPokeColor } from "../../../utils";
 import { BtnFavorite } from "../BtnFavorite";
+
 export function Info(props) {
   const { pokemon, pokemonUrl } = props;
   const color = getPokeColor(pokemon.types[0].type.name);

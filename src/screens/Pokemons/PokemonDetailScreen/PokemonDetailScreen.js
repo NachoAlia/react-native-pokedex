@@ -7,6 +7,7 @@ import { Header } from "../../../components/PokemonDetail/Header";
 import { Info } from "../../../components/PokemonDetail";
 import { getPokeColor } from "../../../utils";
 import { Image } from "react-native-elements";
+
 export function PokemonDetailScreen(props) {
   const [pokemon, setPokemon] = useState(null);
   const { route } = props;
@@ -36,7 +37,7 @@ export function PokemonDetailScreen(props) {
         source={require("../../../../assets/icons/pokeball.png")}
         style={{ width: 400, height: 400, opacity: 0.2 }}
       />
-      <Header pokemon={pokemon} />
+      <Header pokemon={pokemon} setPokemon={setPokemon} />
       <Info pokemon={pokemon} pokemonUrl={url} />
     </View>
   );

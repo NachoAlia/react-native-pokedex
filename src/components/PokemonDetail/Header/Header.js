@@ -1,10 +1,20 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { styles } from "./Header.styles";
-import { Image, Icon } from "react-native-elements";
+import { Image, Icon, Button, Tooltip } from "react-native-elements";
+import { useNavigation } from "@react-navigation/native";
+import { screen } from "../../../utils";
+import { map } from "lodash";
+import { getPokeIcon } from "../../../utils";
 export function Header(props) {
-  const { pokemon } = props;
-
+  const { pokemon, setPokemon } = props;
+  const navigation = useNavigation();
+  const handleGoBack = () => {
+    setPokemon(null);
+    navigation.navigate(screen.pokemons.tab, {
+      screen: screen.pokemons.pokemons,
+    });
+  };
   return (
     <View
       style={{
@@ -20,7 +30,21 @@ export function Header(props) {
           justifyContent: "space-between",
         }}
       >
-        <View style={{ width: "50%", alignItems: "flex-start" }}>
+        <View
+          style={{
+            width: "50%",
+            alignItems: "flex-start",
+            flexDirection: "row",
+          }}
+        >
+          <Icon
+            type="material-community"
+            name="arrow-left"
+            size={35}
+            color="#fff"
+            onPress={handleGoBack}
+            style={{ marginTop: 2, marginRight: 10, marginLeft: -5 }}
+          />
           <Text
             style={{
               fontSize: 25,
@@ -48,6 +72,29 @@ export function Header(props) {
             #{pokemon.order}
           </Text>
         </View>
+      </View>
+      <View style={{ flexDirection: "row", marginTop: 15 }}>
+        {map(pokemon.types, (type) => {
+          return (
+            <TouchableOpacity>
+              <Tooltip
+                withOverlay={false}
+                key={type.type.name}
+                popover={
+                  <Text style={{ color: "#fff" }}>{type.type.name}</Text>
+                }
+              >
+                <View style={{ marginLeft: 5 }} key={type.type.name}>
+                  <Image
+                    source={getPokeIcon(type.type.name)}
+                    style={{ width: 32, height: 32, borderRadius: 5 }}
+                    resizeMode="cover"
+                  />
+                </View>
+              </Tooltip>
+            </TouchableOpacity>
+          );
+        })}
       </View>
     </View>
   );

@@ -6,6 +6,7 @@ import { FavoritesStack } from "./FavoritesStack";
 import { AccountStack } from "./AccountStack";
 import { SearchScreen } from "../screens/SearchScreen";
 import { screen } from "../utils";
+
 const Tab = createBottomTabNavigator();
 
 export function AppNavigation() {
@@ -27,6 +28,7 @@ export function AppNavigation() {
         component={PokemonStack}
         options={{
           title: "Pokédex",
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
