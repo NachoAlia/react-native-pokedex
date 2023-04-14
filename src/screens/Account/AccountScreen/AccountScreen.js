@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Button } from "react-native-elements";
-
+import { Button, Image } from "react-native-elements";
+import { BackgroundImage } from "react-native-elements/dist/config";
 import { useNavigation } from "@react-navigation/native";
 import { InfoUser, AccountOptions } from "../../../components";
 import { ButtonLogout } from "../../../components";
@@ -18,9 +18,24 @@ export function AccountScreen() {
 
   return (
     <View style={styles.content}>
+      <BackgroundImage
+        source={require("../../../../assets/backgrounds/11.png")}
+        resizeMode="cover"
+        style={styles.backgroundImage}
+      />
+      <Image
+        source={require("../../../../assets/backgrounds/15.png")}
+        style={{
+          resizeMode: "contain",
+          width: "100%",
+          height: 200,
+          opacity: 1.0,
+          position: "absolute",
+          top: 70,
+        }}
+      />
       <InfoUser />
       <AccountOptions onReload={onReload} />
-      <ButtonLogout title="Cerrar sesion" containerStyle={{ marginTop: 5 }} />
     </View>
   );
 }

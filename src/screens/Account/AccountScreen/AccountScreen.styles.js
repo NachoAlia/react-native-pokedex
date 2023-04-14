@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   content: {
     minHeight: "100%",
+    backgroundColor: "#e9e9e9",
   },
   btnSignOut: {
     paddingVertical: 10,

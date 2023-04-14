@@ -83,3 +83,14 @@ export function getBackgroundTypeColor(color) {
 
   return `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`;
 }
+
+export function formattedIndex(num) {
+  if (num > 0 && num < 10) {
+    return `#00${num}`;
+  }
+  if (num >= 10 && num <= 99) {
+    return `#0${num}`;
+  }
+
+  return `#${num}`;
+}

@@ -95,7 +95,7 @@ export function LoginForm() {
           onPress={formik.handleSubmit}
           loading={formik.isSubmitting}
         />
-        <TouchableOpacity style={styles.tcontainerGoogle} activeOpacity={0.8}>
+        {/* <TouchableOpacity style={styles.tcontainerGoogle} activeOpacity={0.8}>
           <Image
             source={require("../../../../assets/icons/google.png")}
             style={{
@@ -105,6 +105,8 @@ export function LoginForm() {
               marginLeft: 20,
             }}
           />
+          
+       
           <Text style={styles.textTContainerGoogle}>Continuar con google</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.tcontainerFacebook} activeOpacity={0.8}>
@@ -121,12 +123,11 @@ export function LoginForm() {
             Continuar con facebook
           </Text>
         </TouchableOpacity>
-
+            */}
         <Text style={styles.textSignUp}>
-          ¿No tienes una cuenta?
+          ¿No tienes una cuenta?{" "}
           <Text style={styles.buttonSignUp} onPress={goToRegisterScreen}>
-            {" "}
-            Registrate
+            Regístrate
           </Text>
         </Text>
       </View>

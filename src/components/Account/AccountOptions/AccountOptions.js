@@ -6,6 +6,7 @@ import { Modal } from "../../Shared";
 import { ChangeDisplayNameForm } from "../ChangeDisplayNameForm";
 import { ChangeEmailForm } from "../ChangeEmailForm";
 import { ChangePasswordForm } from "../ChangePasswordForm";
+import { getAuth, signOut } from "firebase/auth";
 
 export function AccountOptions(props) {
   const { onReload } = props;
@@ -30,6 +31,9 @@ export function AccountOptions(props) {
         <ChangePasswordForm onClose={onCloseOpenModal} onReload={onReload} />
       );
       setShowModal(true);
+    }
+    if (key === "signOut") {
+      setRenderComponent(null);
     }
   };
   const onCloseOpenModal = () => setShowModal((prevState) => !prevState);
@@ -90,5 +94,34 @@ function getMenuOptions(selectedComponent) {
       iconColorRight: "#ccc",
       onPress: () => selectedComponent("password"),
     },
+    {
+      title: "Cerrar sesion",
+      iconType: "material-community",
+      iconNameLeft: "power",
+      iconColorLeft: "#ccc",
+      iconNameRight: "chevron-right",
+      iconColorRight: "#ccc",
+      onPress: () => {
+        handleSignOut();
+      },
+    },
   ];
+
+  function handleSignOut() {
+    const signOutUser = async () => {
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          navigation.navigate(screen.account.login);
+        })
+        .catch((error) => {
+          Toast.show({
+            type: "error",
+            position: "bottom",
+            text1: String(error),
+          });
+        });
+    };
+    signOutUser();
+  }
 }

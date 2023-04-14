@@ -6,7 +6,7 @@ import { styles } from "./PokemonCard.styles";
 import { Loading } from "../../Shared/Loading/Loading";
 import { map } from "lodash";
 import { getPokeColor, getPokeIcon } from "../../../utils";
-
+import { formattedIndex } from "../../../utils";
 export function PokemonCard(props) {
   const { url } = props;
   const [pokemon, setPokemon] = useState(null);
@@ -35,13 +35,14 @@ export function PokemonCard(props) {
           uri: pokemon.sprites.front_default,
         }}
         style={styles.pokeImage}
+        fadeDuration={0}
       />
 
       <Text style={styles.pokeName}>
         {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
       </Text>
 
-      <Text style={styles.pokeOrder}> #{pokemon.order}</Text>
+      <Text style={styles.pokeOrder}> {formattedIndex(pokemon.order)}</Text>
 
       <View style={styles.badgeContainer}>
         {map(pokemon.types, (type) => {

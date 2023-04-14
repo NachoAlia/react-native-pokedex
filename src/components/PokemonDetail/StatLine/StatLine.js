@@ -7,6 +7,7 @@ export function StatLine(props) {
     <View
       style={{
         width: number,
+        maxWidth: 100,
         marginVertical: 8,
         height: 5,
         marginLeft: 10,

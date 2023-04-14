@@ -7,22 +7,26 @@ import { Header } from "../../../components/PokemonDetail/Header";
 import { Info } from "../../../components/PokemonDetail";
 import { getPokeColor } from "../../../utils";
 import { Image } from "react-native-elements";
+import { useFocusEffect } from "@react-navigation/native";
 
 export function PokemonDetailScreen(props) {
   const [pokemon, setPokemon] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { route } = props;
   const url = route.params.pokemon;
   useEffect(() => {
+    setIsLoading(true);
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
         setTimeout(() => {
           setPokemon(data);
-        }, 2000);
+          setIsLoading(false);
+        }, 1000);
       });
   }, [url]);
 
-  if (!pokemon) return <Loading />;
+  if (!pokemon || isLoading) return <Loading />;
 
   return (
     <View
@@ -36,6 +40,7 @@ export function PokemonDetailScreen(props) {
       <Image
         source={require("../../../../assets/icons/pokeball.png")}
         style={{ width: 400, height: 400, opacity: 0.2 }}
+        fadeDuration={0}
       />
       <Header pokemon={pokemon} setPokemon={setPokemon} />
       <Info pokemon={pokemon} pokemonUrl={url} />

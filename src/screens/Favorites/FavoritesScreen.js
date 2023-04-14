@@ -62,7 +62,7 @@ export function FavoritesScreen() {
       <FlatList
         data={pokemons}
         numColumns={3}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {

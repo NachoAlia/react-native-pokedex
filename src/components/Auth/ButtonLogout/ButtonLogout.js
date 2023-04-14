@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Text } from "react-native-elements";
+import { Button, Text, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { getAuth, signOut } from "firebase/auth";
 import { screen } from "../../../utils";
 
 export function ButtonLogout(props) {
-  const { title, containerStyle, buttonStyle } = props;
+  const { title, containerStyle, buttonStyle, titleStyle, icon } = props;
 
   const navigation = useNavigation();
 
@@ -29,7 +29,19 @@ export function ButtonLogout(props) {
       title={title}
       containerStyle={containerStyle}
       buttonStyle={buttonStyle}
+      titleStyle={titleStyle}
       onPress={signOutUser}
+      icon={
+        icon && (
+          <Icon
+            type="material-community"
+            name="power"
+            size={25}
+            color={"#0275d8"}
+            style={{ marginRight: 5 }}
+          />
+        )
+      }
     />
   );
 }

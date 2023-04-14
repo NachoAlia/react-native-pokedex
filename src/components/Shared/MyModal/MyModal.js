@@ -20,9 +20,9 @@ export function MyModal() {
     navigation.navigate(screen.account.tab, { screen: screen.account.account });
   };
   return (
-    <View style={{ alignItems: "center" }}>
+    <View style={{ alignContent: "center" }}>
       <Avatar
-        size="medium"
+        size={40}
         rounded
         source={{ uri: auth.currentUser.photoURL }}
         onPress={() => setIsOverlayOpen(true)}
@@ -41,16 +41,33 @@ export function MyModal() {
             name="close"
             color="#828282"
             onPress={() => setIsOverlayOpen(false)}
-            style={{ alignSelf: "flex-end" }}
+            containerStyle={{ position: "absolute", right: -10 }}
           />
         </View>
 
         <Button
           title="Configuracion"
           containerStyle={styles.containerBtnSettings}
+          buttonStyle={styles.btnStyleSettings}
+          titleStyle={styles.btnTitleStyleSettings}
+          icon={
+            <Icon
+              type="material-community"
+              name="cog"
+              size={20}
+              style={{ marginRight: 5 }}
+              color={"#0275d8"}
+            />
+          }
           onPress={goToConfig}
         />
-        <ButtonLogout title="Cerrar sesion" containerStyle={{ marginTop: 5 }} />
+        <ButtonLogout
+          title="Cerrar sesion"
+          containerStyle={styles.containerBtnSignOut}
+          buttonStyle={styles.btnStyleSignOut}
+          titleStyle={styles.btnTitleStyleSignOut}
+          icon={true}
+        />
       </Overlay>
     </View>
   );

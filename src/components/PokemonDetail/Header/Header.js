@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { styles } from "./Header.styles";
 import { Image, Icon, Button, Tooltip } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import { screen } from "../../../utils";
+import { formattedIndex, screen } from "../../../utils";
 import { map } from "lodash";
 import { getPokeIcon } from "../../../utils";
 export function Header(props) {
@@ -69,17 +69,17 @@ export function Header(props) {
               borderRadius: 5,
             }}
           >
-            #{pokemon.order}
+            {formattedIndex(pokemon.order)}
           </Text>
         </View>
       </View>
       <View style={{ flexDirection: "row", marginTop: 15 }}>
         {map(pokemon.types, (type) => {
           return (
-            <TouchableOpacity>
+            <TouchableOpacity key={type.type.name}>
               <Tooltip
                 withOverlay={false}
-                key={type.type.name}
+                key={pokemon.name + type.type.name}
                 popover={
                   <Text style={{ color: "#fff" }}>{type.type.name}</Text>
                 }

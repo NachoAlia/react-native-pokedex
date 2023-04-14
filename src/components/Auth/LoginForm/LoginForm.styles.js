@@ -64,11 +64,14 @@ export const styles = StyleSheet.create({
   textSignUp: {
     marginTop: 10,
     alignSelf: "center",
+    fontWeight: "bold",
+    color: "#3B3939",
     fontSize: 16,
   },
   buttonSignUp: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "blue",
+    color: "#3590FD",
+    textDecorationLine: "underline",
   },
 });
