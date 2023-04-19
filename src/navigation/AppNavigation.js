@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, TouchableOpacity } from "react-native";
-import { Icon, Image, Text, Button } from "react-native-elements";
+import { Icon, Image } from "react-native-elements";
 import { PokemonStack } from "./PokemonStack";
 import { FavoritesStack } from "./FavoritesStack";
 import { AccountStack } from "./AccountStack";
@@ -9,10 +9,11 @@ import { SearchScreen } from "../screens/SearchScreen";
 import { screen } from "../utils";
 import { Modal } from "../components/Shared";
 import { SearchPokemon } from "../components/Search";
-
+import { themeContext } from "../config/themeContext";
 const Tab = createBottomTabNavigator();
 
 export function AppNavigation() {
+  const theme = useContext(themeContext);
   const [showModalSearch, setShowModalSearch] = useState(false);
   const onCloseOpenModal = () => setShowModalSearch((prevState) => !prevState);
   return (
@@ -29,6 +30,7 @@ export function AppNavigation() {
           headerTitleContainerStyle: {
             alignSelf: "center",
           },
+          tabBarStyle: { backgroundColor: theme.header },
           headerShown: false,
         })}
       >
@@ -37,13 +39,13 @@ export function AppNavigation() {
           component={PokemonStack}
           options={{
             title: "Pokédex",
-            unmountOnBlur: true,
+
             tabBarIcon: ({ color, size }) => (
               <Image
-                source={require("../../assets/icons/hiclipart.com.png")}
+                source={require("../../assets/icons/Poké_Ball_icon.svg.png")}
                 style={{
-                  width: 22,
-                  height: 22,
+                  width: 28,
+                  height: 28,
                   backgroundColor: "transparent",
                 }}
               />
@@ -66,8 +68,8 @@ export function AppNavigation() {
                     alignItems: "center",
                     position: "relative",
                     bottom: 20,
-                    borderWidth: 2,
-                    borderColor: "white",
+                    borderWidth: 3,
+                    borderColor: "red",
                   }}
                 >
                   <Image

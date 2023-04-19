@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View } from "react-native";
 import { Avatar, Text, Icon } from "react-native-elements";
 
@@ -6,11 +6,13 @@ import * as ImagePicker from "expo-image-picker";
 
 import { getAuth, updateProfile } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
 import Toast from "react-native-toast-message";
 import { styles } from "./InfoUser.styles";
+import { themeContext } from "../../../config/themeContext";
 
 export function InfoUser() {
+  const theme = useContext(themeContext);
+
   const { uid, email, photoURL, displayName } = getAuth().currentUser;
   const [avatar, setAvatar] = useState(photoURL);
 
@@ -48,7 +50,12 @@ export function InfoUser() {
   };
 
   return (
-    <View style={styles.content}>
+    <View
+      style={[
+        styles.content,
+        { backgroundColor: theme.backgroundColor, color: theme.color },
+      ]}
+    >
       <Avatar
         size="large"
         rounded
@@ -59,8 +66,10 @@ export function InfoUser() {
         <Avatar.Accessory size={24} onPress={changeAvatar} />
       </Avatar>
       <View>
-        <Text style={styles.displayName}>{displayName || "Anonimo"}</Text>
-        <Text>{email}</Text>
+        <Text style={[styles.displayName, { color: theme.color }]}>
+          {displayName || "Anonimo"}
+        </Text>
+        <Text style={{ color: theme.color }}>{email}</Text>
       </View>
     </View>
   );

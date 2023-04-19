@@ -7,32 +7,22 @@ export const styles = StyleSheet.create({
   container: {
     width: cardWidth,
     height: 170,
-    backgroundColor: "#fff",
     borderRadius: 10,
     borderWidth: 0.5,
     borderColor: "#000",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
     marginHorizontal: -5,
     marginVertical: 10,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "transparent",
   },
   containerBackgroundImage: {
-    flex: 1,
     resizeMode: "contain",
     top: 10,
     width: "100%",
     position: "absolute",
   },
   backgroundImagePokeBall: {
-    flex: 1,
     resizeMode: "cover",
     width: 140,
     height: 130,
@@ -79,6 +69,5 @@ export const styles = StyleSheet.create({
 
   type: (type) => ({
     backgroundColor: getPokeColor(type),
-    background: "linear-gradient(to bottom, #4FACFE, #00F2FE)",
   }),
 });

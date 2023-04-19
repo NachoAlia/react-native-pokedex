@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { ListItem } from "react-native-elements";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { ListItem, Icon } from "react-native-elements";
 import { PokemonCard } from "../../components/Pokemons/PokemonCard/PokemonCard";
 import { db } from "../../utils";
 import { getAuth } from "firebase/auth";
-import {
-  doc,
-  getDoc,
-  collection,
-  query,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../utils";
+import { themeContext } from "../../config/themeContext";
+
 export function FavoritesScreen() {
+  const theme = useContext(themeContext);
   const [pokemons, setPokemons] = useState([]);
   const navigation = useNavigation();
   const auth = getAuth();
-  const goToDetail2 = (url) => {
-    navigation.navigate(screen.pokemons.pokemon, { pokemon: url });
-  };
+
   const goToDetail = (url) => {
     navigation.navigate(screen.pokemons.tab, {
       screen: screen.pokemons.pokemon,
@@ -56,26 +56,35 @@ export function FavoritesScreen() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#fff",
+        backgroundColor: theme.backgroundColor,
       }}
     >
       <FlatList
         data={pokemons}
         numColumns={3}
         renderItem={({ item, index }) => (
-          <TouchableOpacity
+          <TouchableWithoutFeedback
             activeOpacity={0.7}
             onPress={() => {
               goToDetail(item.idPokemon);
             }}
-            style={{ backgroundColor: "#fff" }}
           >
-            <ListItem style={{ backgroundColor: "#fff" }} key={item.url}>
-              <PokemonCard url={item.idPokemon} />
+            <ListItem
+              containerStyle={{ backgroundColor: "transparent" }}
+              key={item.idFavorite}
+            >
+              <View style={{ flexDirection: "column" }}>
+                <Icon
+                  type="material-community"
+                  name="heart"
+                  style={{ position: "absolute" }}
+                />
+                <PokemonCard url={item.idPokemon} />
+              </View>
             </ListItem>
-          </TouchableOpacity>
+          </TouchableWithoutFeedback>
         )}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.idFavorite}
       />
       {!pokemons && (
         <Text style={{ fontSize: 18 }}>

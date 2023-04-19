@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, SafeAreaView } from "react-native";
 import { Loading } from "../../../components";
 import { PokemonList } from "../../../components/Pokemons/PokemonList/PokemonList";
 import { styles } from "./PokemonsScreen.styles";
+import { themeContext } from "../../../config/themeContext";
 export function PokemonsScreen() {
+  const theme = useContext(themeContext);
   return (
     <View
       style={{
@@ -11,7 +13,7 @@ export function PokemonsScreen() {
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#fff",
+        backgroundColor: theme.backgroundColor,
       }}
     >
       <PokemonList />

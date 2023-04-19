@@ -26,6 +26,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     color: "blue",
     borderBottomColor: "#c2c2c2",
+    borderTopColor: "#c2c2c2",
     borderTopWidth: 0.5,
     borderBottomWidth: 0.5,
     width: "100%",

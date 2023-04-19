@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo } from "react";
 import {
   View,
   FlatList,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
+  TouchableHighlight,
   ActivityIndicator,
 } from "react-native";
 import { ListItem, Text, SearchBar } from "react-native-elements";
@@ -52,37 +53,40 @@ export function PokemonList() {
 
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity
+      <TouchableWithoutFeedback
         activeOpacity={1}
         onPress={() => {
           goToDetail(item.url);
         }}
-        style={{ backgroundColor: "#fff" }}
       >
-        <ListItem style={{ backgroundColor: "#fff" }} key={item.url}>
-          <PokemonCard url={item.url} />
-        </ListItem>
-      </TouchableOpacity>
+        <View>
+          <ListItem
+            key={item.url}
+            containerStyle={{ backgroundColor: "transparent" }}
+          >
+            <PokemonCard url={item.url} />
+          </ListItem>
+        </View>
+      </TouchableWithoutFeedback>
     );
   };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={pokemon}
-        numColumns={numColumns}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.name}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={
-          isLoadingMore ? (
-            <View style={styles.activityIndicatorContainer}>
-              <ActivityIndicator size="large" color="#db0000" />
-            </View>
-          ) : null
-        }
-      />
-    </View>
+    <FlatList
+      data={pokemon}
+      numColumns={numColumns}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.name}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.5}
+      initialNumToRender={50}
+      ListFooterComponent={
+        isLoadingMore ? (
+          <View style={styles.activityIndicatorContainer}>
+            <ActivityIndicator size="large" color="#db0000" />
+          </View>
+        ) : null
+      }
+    />
   );
 }

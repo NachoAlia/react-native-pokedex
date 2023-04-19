@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Button, Text, ListItem, Icon } from "react-native-elements";
 import { map } from "lodash";
@@ -6,13 +6,15 @@ import { Modal } from "../../Shared";
 import { ChangeDisplayNameForm } from "../ChangeDisplayNameForm";
 import { ChangeEmailForm } from "../ChangeEmailForm";
 import { ChangePasswordForm } from "../ChangePasswordForm";
+import { ChangeColorTheme } from "../ChangeColorTheme";
 import { getAuth, signOut } from "firebase/auth";
+import { themeContext } from "../../../config/themeContext";
 
 export function AccountOptions(props) {
   const { onReload } = props;
-
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
+  const theme = useContext(themeContext);
   const selectedComponent = (key) => {
     if (key === "displayName") {
       setRenderComponent(
@@ -32,6 +34,9 @@ export function AccountOptions(props) {
       );
       setShowModal(true);
     }
+    if (key === "theme") {
+      setRenderComponent(null);
+    }
     if (key === "signOut") {
       setRenderComponent(null);
     }
@@ -40,16 +45,27 @@ export function AccountOptions(props) {
   const menuOptions = getMenuOptions(selectedComponent);
 
   return (
-    <View style={{ marginTop: 20 }}>
+    <View style={{ marginTop: 20, backgroundColor: theme.backgroundColor }}>
       {map(menuOptions, (menu, index) => (
-        <ListItem key={index} bottomDivider onPress={menu.onPress}>
+        <ListItem
+          key={index}
+          bottomDivider
+          onPress={menu.onPress}
+          containerStyle={{
+            backgroundColor: theme.backgroundColor,
+            color: theme.color,
+          }}
+        >
           <Icon
             type={menu.iconType}
             name={menu.iconNameLeft}
             color={menu.iconColorLeft}
           />
           <ListItem.Content>
-            <Text>{menu.title}</Text>
+            <View style={{ width: "100%" }}>
+              <Text style={{ color: theme.color }}>{menu.title}</Text>
+              {menu.title == "Cambiar tema" && <ChangeColorTheme />}
+            </View>
           </ListItem.Content>
           <Icon
             type={menu.iconType}
@@ -93,6 +109,15 @@ function getMenuOptions(selectedComponent) {
       iconNameRight: "chevron-right",
       iconColorRight: "#ccc",
       onPress: () => selectedComponent("password"),
+    },
+    {
+      title: "Cambiar tema",
+      iconType: "material-community",
+      iconNameLeft: "weather-night",
+      iconColorLeft: "#ccc",
+      iconNameRight: "",
+      iconColorRight: "#ccc",
+      onPress: () => selectedComponent("theme"),
     },
     {
       title: "Cerrar sesion",

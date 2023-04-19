@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Overlay } from "react-native-elements";
-
+import { themeContext } from "../../../config/themeContext";
 export function Modal(props) {
   const { show, close, children } = props;
-
+  const theme = useContext(themeContext);
   return (
     <Overlay
       isVisible={show}
@@ -11,7 +11,7 @@ export function Modal(props) {
       overlayStyle={{
         height: "auto",
         width: "90%",
-        backgroundColor: "#fff",
+        backgroundColor: theme.backgroundColor,
       }}
     >
       {children}

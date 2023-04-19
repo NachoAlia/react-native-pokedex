@@ -87,7 +87,13 @@ export function Header(props) {
                 <View style={{ marginLeft: 5 }} key={type.type.name}>
                   <Image
                     source={getPokeIcon(type.type.name)}
-                    style={{ width: 32, height: 32, borderRadius: 5 }}
+                    style={{
+                      width: 32,
+                      height: 32,
+                      borderRadius: 30,
+                      borderColor: "orange",
+                      borderWidth: 0.5,
+                    }}
                     resizeMode="cover"
                   />
                 </View>

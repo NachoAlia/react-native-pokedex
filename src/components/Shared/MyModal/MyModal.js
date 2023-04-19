@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View } from "react-native";
 import { Overlay, Icon, Avatar, Button } from "react-native-elements";
 
@@ -9,8 +9,10 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
 
 import { styles } from "./MyModal.styles";
+import { themeContext } from "../../../config/themeContext";
 
 export function MyModal() {
+  const theme = useContext(themeContext);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const auth = getAuth();
   const navigation = useNavigation();
@@ -20,7 +22,7 @@ export function MyModal() {
     navigation.navigate(screen.account.tab, { screen: screen.account.account });
   };
   return (
-    <View style={{ alignContent: "center" }}>
+    <View style={{ alignContent: "center", backgroundColor: theme.header }}>
       <Avatar
         size={40}
         rounded
@@ -31,7 +33,10 @@ export function MyModal() {
         isVisible={isOverlayOpen}
         transparent={true}
         onBackdropPress={() => setIsOverlayOpen(false)}
-        overlayStyle={styles.overlayDropdown}
+        overlayStyle={[
+          styles.overlayDropdown,
+          { backgroundColor: theme.backgroundColor },
+        ]}
         backdropStyle={styles.backdrop}
       >
         <View style={styles.infoUserDropdown}>
@@ -47,8 +52,11 @@ export function MyModal() {
 
         <Button
           title="Configuracion"
-          containerStyle={styles.containerBtnSettings}
-          buttonStyle={styles.btnStyleSettings}
+          containerStyle={[styles.containerBtnSettings]}
+          buttonStyle={[
+            styles.btnStyleSettings,
+            { backgroundColor: theme.backgroundColor },
+          ]}
           titleStyle={styles.btnTitleStyleSettings}
           icon={
             <Icon
@@ -63,8 +71,11 @@ export function MyModal() {
         />
         <ButtonLogout
           title="Cerrar sesion"
-          containerStyle={styles.containerBtnSignOut}
-          buttonStyle={styles.btnStyleSignOut}
+          containerStyle={[styles.containerBtnSignOut]}
+          buttonStyle={[
+            styles.btnStyleSignOut,
+            { backgroundColor: theme.backgroundColor },
+          ]}
           titleStyle={styles.btnTitleStyleSignOut}
           icon={true}
         />

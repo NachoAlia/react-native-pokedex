@@ -18,7 +18,9 @@ import {
 } from "firebase/firestore";
 import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
+import { themeContext } from "../../../config/themeContext";
 export function SearchPokemon(props) {
+  const theme = useContext(themeContext);
   const { onClose } = props;
   const { pokemon } = useContext(PokemonContext);
   const [searchTerm, setSearchTerm] = useState("");
@@ -54,14 +56,19 @@ export function SearchPokemon(props) {
 
   const handleSaveHistory = async (pokemon) => {
     setIsLoading(true);
+    const searchExist = searchHistory.some((item) => {
+      return item.search.toString() === searchTerm.toString();
+    });
     try {
-      const idHistory = uuid();
-      const data = {
-        id: idHistory,
-        search: searchTerm,
-        idUser: auth.currentUser.uid,
-      };
-      await setDoc(doc(db, "history", data.id), data);
+      if (!searchExist) {
+        const idHistory = uuid();
+        const data = {
+          id: idHistory,
+          search: searchTerm,
+          idUser: auth.currentUser.uid,
+        };
+        await setDoc(doc(db, "history", data.id), data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -124,7 +131,7 @@ export function SearchPokemon(props) {
         value={searchTerm}
         onChangeText={(text) => setSearchTerm(text)}
         inputContainerStyle={{
-          backgroundColor: "white",
+          backgroundColor: theme.backgroundColor,
           padding: 2,
           width: "100%",
           height: 40,
@@ -134,18 +141,19 @@ export function SearchPokemon(props) {
           borderRadius: 50,
         }}
         inputStyle={{
-          backgroundColor: "white",
+          backgroundColor: theme.backgroundColor,
           padding: 0,
+          color: theme.color,
         }}
         containerStyle={{
           width: "90%",
           height: 10,
           marginTop: 20,
-          backgroundColor: "white",
+          backgroundColor: theme.backgroundColor,
           borderBottomColor: "transparent",
           borderTopColor: "transparent",
         }}
-        placeholderTextColor={"#g5g5g5"}
+        placeholderTextColor={theme.color}
       />
       {isLoading && <ActivityIndicator style={{ marginTop: 60 }} />}
       {!filteredPokemon && (
@@ -156,6 +164,7 @@ export function SearchPokemon(props) {
                 fontSize: 20,
                 fontWeight: "bold",
                 marginLeft: 20,
+                color: theme.color,
               }}
             >
               Historial
@@ -169,14 +178,16 @@ export function SearchPokemon(props) {
             }}
           >
             {searchHistory.length > 0 && (
-              <Text onPress={deleteAllSearch}>Borrar todo</Text>
+              <Text onPress={deleteAllSearch} style={{ color: theme.color }}>
+                Borrar todo
+              </Text>
             )}
           </View>
         </View>
       )}
       <ScrollView
         style={{
-          backgroundColor: "white",
+          backgroundColor: theme.backgroundColor,
           width: "90%",
           bottom: 0,
           marginTop: filteredPokemon == null ? 20 : 60,
@@ -192,10 +203,13 @@ export function SearchPokemon(props) {
                   onPress={() => {
                     setSearchTerm(item.search);
                   }}
+                  containerStyle={{ backgroundColor: "transparent" }}
                 >
                   <ListItem.Content>
                     {item.search.length > 0 && (
-                      <ListItem.Title>{item.search}</ListItem.Title>
+                      <ListItem.Title style={{ color: theme.color }}>
+                        {item.search}
+                      </ListItem.Title>
                     )}
                   </ListItem.Content>
                   <Icon
@@ -211,7 +225,9 @@ export function SearchPokemon(props) {
               );
             })
           ) : (
-            <Text style={{ alignSelf: "center", marginTop: 30 }}>
+            <Text
+              style={{ alignSelf: "center", marginTop: 30, color: theme.color }}
+            >
               No se encontro historial de busqueda
             </Text>
           )
@@ -224,9 +240,12 @@ export function SearchPokemon(props) {
                 onPress={() => {
                   goToDetails(item, searchTerm);
                 }}
+                containerStyle={{ backgroundColor: "transparent" }}
               >
                 <ListItem.Content>
-                  <ListItem.Title>{item.name}</ListItem.Title>
+                  <ListItem.Title style={{ color: theme.color }}>
+                    {item.name}
+                  </ListItem.Title>
                 </ListItem.Content>
                 <Icon
                   type="material-community"

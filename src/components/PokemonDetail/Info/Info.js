@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text } from "react-native";
 import { Image, Icon } from "react-native-elements";
 import { styles } from "./Info.styles";
 import { StatLine } from "../StatLine";
 import { getPokeColor } from "../../../utils";
 import { BtnFavorite } from "../BtnFavorite";
-
+import { themeContext } from "../../../config/themeContext";
 export function Info(props) {
+  const theme = useContext(themeContext);
   const { pokemon, pokemonUrl } = props;
   const color = getPokeColor(pokemon.types[0].type.name);
   const getValue = (statName) => {
@@ -15,7 +16,7 @@ export function Info(props) {
   };
 
   return (
-    <View style={styles.content}>
+    <View style={[styles.content, { backgroundColor: theme.backgroundColor }]}>
       <View style={styles.containerImage}>
         <Image
           source={{
@@ -28,7 +29,9 @@ export function Info(props) {
         <BtnFavorite idPokemon={pokemonUrl} />
       </View>
       <View style={{ top: 40 }}>
-        <Text style={{ fontWeight: "bold" }}>Información</Text>
+        <Text style={{ fontWeight: "bold", color: theme.color }}>
+          Información
+        </Text>
       </View>
       <View style={{ top: 60, left: 0 }}>
         <View
@@ -44,7 +47,7 @@ export function Info(props) {
               marginHorizontal: 10,
             }}
           >
-            <Text style={{ fontSize: 12 }}>
+            <Text style={{ fontSize: 12, color: theme.color }}>
               ⚖️{" "}
               {pokemon.weight
                 .toString()
@@ -61,11 +64,13 @@ export function Info(props) {
             <Text style={{ marginTop: 5, color: "#828282" }}>Peso</Text>
           </View>
           <View style={{ alignItems: "center", marginHorizontal: 10 }}>
-            <Text style={{ fontSize: 12 }}>📏 .{pokemon.height} m</Text>
+            <Text style={{ fontSize: 12, color: theme.color }}>
+              📏 {pokemon.height / 10} m
+            </Text>
             <Text style={{ marginTop: 5, color: "#828282" }}>Altura</Text>
           </View>
           <View style={{ alignItems: "center", marginHorizontal: 10 }}>
-            <Text style={{ fontSize: 12 }}>
+            <Text style={{ fontSize: 12, color: theme.color }}>
               ⭐{" "}
               {pokemon.abilities[0].ability.name[0].toUpperCase() +
                 pokemon.abilities[0].ability.name.slice(1)}
@@ -74,7 +79,9 @@ export function Info(props) {
           </View>
         </View>
         <View style={{ marginTop: 40, alignItems: "center" }}>
-          <Text style={{ fontWeight: "bold" }}>Estadísticas</Text>
+          <Text style={{ fontWeight: "bold", color: theme.color }}>
+            Estadísticas
+          </Text>
           <View
             style={{
               flexDirection: "row",
@@ -84,13 +91,18 @@ export function Info(props) {
               right: 15,
             }}
           >
-            <View style={{ alignItems: "flex-end", marginLeft: 10 }}>
-              <Text>HP</Text>
-              <Text>Attack</Text>
-              <Text>Defense</Text>
-              <Text>Special Attack</Text>
-              <Text>Special Defence</Text>
-              <Text>Speed</Text>
+            <View
+              style={{
+                alignItems: "flex-end",
+                marginLeft: 10,
+              }}
+            >
+              <Text style={{ color: theme.color }}>HP</Text>
+              <Text style={{ color: theme.color }}>Attack</Text>
+              <Text style={{ color: theme.color }}>Defense</Text>
+              <Text style={{ color: theme.color }}>Special Attack</Text>
+              <Text style={{ color: theme.color }}>Special Defence</Text>
+              <Text style={{ color: theme.color }}>Speed</Text>
             </View>
             <View
               style={{
@@ -102,12 +114,16 @@ export function Info(props) {
               }}
             />
             <View style={{ alignItems: "flex-end", marginLeft: 10 }}>
-              <Text>{getValue("hp")}</Text>
-              <Text>{getValue("attack")}</Text>
-              <Text>{getValue("defense")}</Text>
-              <Text>{getValue("special-attack")}</Text>
-              <Text>{getValue("special-defense")}</Text>
-              <Text>{getValue("speed")}</Text>
+              <Text style={{ color: theme.color }}>{getValue("hp")}</Text>
+              <Text style={{ color: theme.color }}>{getValue("attack")}</Text>
+              <Text style={{ color: theme.color }}>{getValue("defense")}</Text>
+              <Text style={{ color: theme.color }}>
+                {getValue("special-attack")}
+              </Text>
+              <Text style={{ color: theme.color }}>
+                {getValue("special-defense")}
+              </Text>
+              <Text style={{ color: theme.color }}>{getValue("speed")}</Text>
             </View>
             <View style={{ marginTop: 3 }}>
               <StatLine number={getValue("hp")} color={color} />
