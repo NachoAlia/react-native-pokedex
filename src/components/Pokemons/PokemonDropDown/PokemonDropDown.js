@@ -10,17 +10,16 @@ export function PokemonDropDown(props) {
   const { setFilterValue, filterValue } = props;
   const theme = useContext(themeContext);
   const [open, setOpen] = useState(false);
+
   const [openDrop, setOpenDrop] = useState(false);
   const [value, setValue] = useState("ninguno");
-  const [items, setItems] = useState(typeKeys);
-
   const typeKeys = [{ label: "Sin filtro", value: "Sin filtro" }].concat(
     Object.keys(typesIcons).map((type) => ({
       label: type[0].toUpperCase() + type.slice(1, type.length).toLowerCase(),
       value: type,
     }))
   );
-
+  const [items, setItems] = useState(typeKeys);
   const handleChangeValue = (value) => {
     setFilterValue(value);
   };
