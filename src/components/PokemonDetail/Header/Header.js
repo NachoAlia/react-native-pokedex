@@ -69,7 +69,7 @@ export function Header(props) {
               borderRadius: 5,
             }}
           >
-            {formattedIndex(pokemon.order)}
+            {formattedIndex(pokemon.id)}
           </Text>
         </View>
       </View>

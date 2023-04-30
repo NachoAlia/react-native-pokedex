@@ -29,7 +29,6 @@ export function PokemonCard(props) {
           style={styles.backgroundImagePokeBall}
         />
       </View>
-
       <Image
         source={{
           uri: pokemon.sprites.front_default,
@@ -41,9 +40,7 @@ export function PokemonCard(props) {
       <Text style={styles.pokeName}>
         {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
       </Text>
-
-      <Text style={styles.pokeOrder}> {formattedIndex(pokemon.order)}</Text>
-
+      <Text style={styles.pokeOrder}> {formattedIndex(pokemon.id)}</Text>
       <View style={styles.badgeContainer}>
         {map(pokemon.types, (type) => {
           return (

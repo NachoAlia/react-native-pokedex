@@ -1,23 +1,54 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import {
   View,
-  FlatList,
   TouchableWithoutFeedback,
-  TouchableHighlight,
   ActivityIndicator,
+  TouchableHighlight,
 } from "react-native";
-import { ListItem, Text, SearchBar } from "react-native-elements";
+import { ListItem, Text, SearchBar, Icon } from "react-native-elements";
 import { PokemonCard } from "../PokemonCard/PokemonCard";
 import { styles } from "./PokemonList.styles";
 import { useNavigation } from "@react-navigation/native";
 import { screen, formattedIndex } from "../../../utils";
+import MasonryList from "@react-native-seoul/masonry-list";
+import { PokemonContext } from "../../../utils/contexts/PokemonContext";
+import { themeContext } from "../../../config/themeContext";
+
+import { PokemonDropDown } from "../PokemonDropDown/PokemonDropDown";
 
 export function PokemonList() {
-  const [pokemon, setPokemon] = useState([]);
-  const [next, setNext] = useState("");
+  const theme = useContext(themeContext);
+  const pokemon = useContext(PokemonContext).pokemon;
+  const [pokeLimit, setPokeLimit] = useState(20);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-
+  const [showMore, setShowMore] = useState(false);
   const navigation = useNavigation();
+  const [_, handleRefresh] = useState(false);
+  const [filterValue, setFilterValue] = useState(null);
+  const [filteredPokemons, setFilteredPokemons] = useState([]);
+  const [loadingFilter, setLoadingFilter] = useState(false);
+  useEffect(() => {
+    let filtered = [];
+
+    if (pokemon.length > 0 && filterValue !== null) {
+      setLoadingFilter(true);
+      const fetchPromises = pokemon
+        .slice(0, 300)
+        .map((pokemon) => fetch(pokemon.url).then((res) => res.json()));
+      Promise.all(fetchPromises).then((dataArray) => {
+        dataArray.forEach((data, index) => {
+          if (data.types.some((type) => type.type.name === filterValue)) {
+            filtered.push(pokemon[index]);
+          }
+        });
+        setFilteredPokemons(filtered);
+        setLoadingFilter(false);
+      });
+    } else {
+      setFilteredPokemons([]);
+    }
+    handleRefresh(true);
+  }, [filterValue]);
 
   const goToDetail = (url) => {
     navigation.navigate(screen.pokemons.pokemon, { pokemon: url });
@@ -25,32 +56,21 @@ export function PokemonList() {
 
   const numColumns = 3;
 
-  useEffect(() => {
-    if (pokemon.length === 0) {
-      fetch("https://pokeapi.co/api/v2/pokemon?limit=50&offset=0")
-        .then((res) => res.json())
-        .then((data) => {
-          setPokemon(data.results);
-          setNext(data.next);
-        });
-    }
-  }, [pokemon]);
-
-  const loadMore = () => {
-    if (isLoadingMore) return;
-    if (next) {
-      setIsLoadingMore(true);
-      fetch(next)
-        .then((res) => res.json())
-        .then((data) => {
-          setPokemon((prevState) => [...prevState, ...data.results]);
-          setNext(data.next);
-
-          setIsLoadingMore(false);
-        });
-    }
+  const getPokemons = () => {
+    return filteredPokemons.length > 0
+      ? filteredPokemons
+      : pokemon.slice(0, pokeLimit);
   };
 
+  const loadMorePokes = () => {
+    setShowMore(false);
+    let aux = pokeLimit;
+    setPokeLimit((prevState) => prevState + 20);
+
+    setIsLoadingMore(false);
+
+    return pokemon.slice(aux, pokeLimit);
+  };
   const renderItem = ({ item }) => {
     return (
       <TouchableWithoutFeedback
@@ -71,22 +91,68 @@ export function PokemonList() {
     );
   };
 
-  return (
-    <FlatList
-      data={pokemon}
-      numColumns={numColumns}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.name}
-      onEndReached={loadMore}
-      onEndReachedThreshold={0.5}
-      initialNumToRender={50}
-      ListFooterComponent={
-        isLoadingMore ? (
-          <View style={styles.activityIndicatorContainer}>
-            <ActivityIndicator size="large" color="#db0000" />
-          </View>
-        ) : null
-      }
-    />
+  return !loadingFilter ? (
+    <>
+      <PokemonDropDown
+        setFilterValue={setFilterValue}
+        filterValue={filterValue}
+      />
+      <MasonryList
+        data={getPokemons()}
+        numColumns={numColumns}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.name}
+        onEndReachedThreshold={0.5}
+        onEndReached={() => setShowMore(true)}
+        maxToRenderPerBatch={50}
+        removeClippedSubviews={true}
+        onRefresh={() => {
+          handleRefresh(true);
+          setPokeLimit(20);
+        }}
+        ListFooterComponent={
+          !isLoadingMore &&
+          showMore &&
+          (filterValue == null || filterValue == "Sin filtro") && (
+            <TouchableHighlight
+              underlayColor="rgba(65,105,225, 0.2)"
+              activeOpacity={0.5}
+              style={{
+                width: "40%",
+                marginBottom: 40,
+                backgroundColor: theme.header,
+
+                alignContent: "center",
+                justifyContent: "center",
+                alignSelf: "center",
+                borderWidth: 1,
+                borderRadius: 20,
+              }}
+              onPress={() => {
+                setShowMore(false);
+                loadMorePokes();
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Icon
+                  size={20}
+                  type="material-community"
+                  name="arrow-down-thick"
+                  color={theme.grayColor}
+                />
+              </View>
+            </TouchableHighlight>
+          )
+        }
+      />
+    </>
+  ) : (
+    <ActivityIndicator size={40} />
   );
 }

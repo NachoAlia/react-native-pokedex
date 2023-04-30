@@ -24,6 +24,8 @@ export function AppNavigation() {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarActiveTintColor: "red",
+          tabBarActiveBackgroundColor: "rgba(65,105,225, 0.2)",
+
           tabBarInactiveTintColor: "#646464",
           tabBarIcon: ({ color, size }) => screenOptions(route, color, size),
           tabBarLabelPosition: "beside-icon",
@@ -38,14 +40,14 @@ export function AppNavigation() {
           name={screen.pokemons.tab}
           component={PokemonStack}
           options={{
-            title: "Pokédex",
+            title: "",
 
             tabBarIcon: ({ color, size }) => (
               <Image
-                source={require("../../assets/icons/Poké_Ball_icon.svg.png")}
+                source={require("../../assets/icons/Poké_Ball_icon.svg2.png")}
                 style={{
-                  width: 28,
-                  height: 28,
+                  width: 32,
+                  height: 32,
                   backgroundColor: "transparent",
                 }}
               />
@@ -89,8 +91,9 @@ export function AppNavigation() {
           name={screen.favorites.tab}
           component={FavoritesStack}
           options={{
-            title: "Favoritos",
+            title: "",
           }}
+          tabBarIcon={(color) => {}}
         />
         <Tab.Screen
           name={screen.account.tab}

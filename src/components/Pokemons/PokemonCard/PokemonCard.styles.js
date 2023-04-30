@@ -5,12 +5,12 @@ const cardWidth = WIDTH / 4;
 
 export const styles = StyleSheet.create({
   container: {
-    width: cardWidth,
+    width: cardWidth - 5,
     height: 170,
     borderRadius: 10,
     borderWidth: 0.5,
     borderColor: "#000",
-    marginHorizontal: -5,
+    marginHorizontal: 5,
     marginVertical: 10,
     alignItems: "center",
     justifyContent: "center",
