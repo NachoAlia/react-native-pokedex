@@ -7,7 +7,7 @@ import { Header } from "../../../components/PokemonDetail/Header";
 import { Info } from "../../../components/PokemonDetail";
 import { getPokeColor } from "../../../utils";
 import { Image } from "react-native-elements";
-import { useFocusEffect } from "@react-navigation/native";
+import { PokemonImageWithTransition } from "../../../components/Pokemons/PokemonImageWithTransition";
 
 export function PokemonDetailScreen(props) {
   const [pokemon, setPokemon] = useState(null);
@@ -40,7 +40,7 @@ export function PokemonDetailScreen(props) {
       <Image
         source={require("../../../../assets/icons/pokeball.png")}
         style={{ width: 400, height: 400, opacity: 0.2 }}
-        fadeDuration={0}
+        scale={0.1}
       />
       <Header pokemon={pokemon} setPokemon={setPokemon} />
       <Info pokemon={pokemon} pokemonUrl={url} />

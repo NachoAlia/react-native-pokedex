@@ -94,6 +94,7 @@ export function Header(props) {
                       borderColor: "orange",
                       borderWidth: 0.5,
                     }}
+                    scale={0.3}
                     resizeMode="cover"
                   />
                 </View>

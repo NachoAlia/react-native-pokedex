@@ -57,6 +57,7 @@ export function BtnFavorite(props) {
   const addFavorite = async () => {
     setIsLoading(true);
     try {
+      setFavorite(true);
       const idFavorite = uuid();
       const data = {
         id: idFavorite,
@@ -67,12 +68,14 @@ export function BtnFavorite(props) {
       setIsReload((prevState) => !prevState);
     } catch (error) {
       console.log(error);
+      setFavorite(false);
     }
     setIsLoading(false);
   };
   const removeFavorite = async () => {
     setIsLoading(true);
     try {
+      setFavorite(false);
       const response = await getFavorites();
 
       await deleteDoc(doc(db, "favorites", response.id));
@@ -91,7 +94,7 @@ export function BtnFavorite(props) {
   };
 
   if (isLoading) return <ActivityIndicator size={35} />;
-
+  if (favorite == null) return null;
   return (
     <View>
       <Icon

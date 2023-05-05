@@ -13,7 +13,7 @@ import { screen, formattedIndex } from "../../../utils";
 import MasonryList from "@react-native-seoul/masonry-list";
 import { PokemonContext } from "../../../utils/contexts/PokemonContext";
 import { themeContext } from "../../../config/themeContext";
-
+import { PokemonCardSkeleton } from "../PokemonCardSkeleton/PokemonCardSkeleton";
 import { PokemonDropDown } from "../PokemonDropDown/PokemonDropDown";
 
 export function PokemonList() {
@@ -97,6 +97,7 @@ export function PokemonList() {
         setFilterValue={setFilterValue}
         filterValue={filterValue}
       />
+
       <MasonryList
         data={getPokemons()}
         numColumns={numColumns}
